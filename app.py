@@ -1,39 +1,33 @@
-from flask import Flask, render_template_string, request, redirect, url_for
+from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# Enterprise Login + Generator Interface
-HTML_TEMPLATE = """
+# Sirf Direct Generator Interface
+UI_CODE = """
 <!DOCTYPE html>
 <html>
 <head>
     <style>
-        body { background: #0a0a0c; color: #00ffcc; font-family: 'Courier New', monospace; }
-        .container { max-width: 500px; margin: 50px auto; padding: 20px; border: 1px solid #333; border-radius: 15px; background: #121215; }
-        input, select { width: 100%; padding: 10px; margin: 10px 0; background: #1a1a1f; border: 1px solid #00ffcc; color: white; }
-        button { width: 100%; padding: 15px; background: #00ffcc; color: black; font-weight: bold; cursor: pointer; border: none; }
+        body { background: #050505; color: #ff0000; font-family: 'Courier New', monospace; padding: 20px; }
+        .dashboard { border: 1px solid #ff0000; padding: 20px; border-radius: 10px; background: #110000; box-shadow: 0 0 15px #ff0000; }
+        .data-panel { border: 1px solid #ff0000; padding: 10px; margin: 10px 0; font-size: 12px; }
+        input, select { background: #000; border: 1px solid #ff0000; color: #ff0000; padding: 10px; width: 100%; margin: 5px 0; }
+        button { background: #ff0000; color: #fff; padding: 15px; border: none; width: 100%; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="container">
-        {% if not logged_in %}
-        <h2>ENTERPRISE LOGIN</h2>
-        <form method="POST" action="/login">
-            <input type="text" name="user" placeholder="Username" required>
-            <input type="password" name="pass" placeholder="Access Key" required>
-            <button type="submit">AUTHENTICATE</button>
-        </form>
-        {% else %}
-        <h2>SENSI GENERATOR V3</h2>
-        <input type="text" id="model" placeholder="Device Model (e.g. Realme 5 Pro)">
-        <input type="text" id="dpi" placeholder="Custom DPI (e.g. 640)">
-        <input type="text" id="fbs" placeholder="Fire Button Size">
-        <select id="mode">
-            <option>Low-End (Stable)</option>
+    <div class="dashboard">
+        <h2 style="text-align:center;">WLC to MY SENSI V3</h2>
+        <div class="data-panel">
+            STATUS: READY | SERVER: ACTIVE
+        </div>
+        <input type="text" placeholder="Device Model">
+        <input type="text" placeholder="DPI">
+        <input type="text" placeholder="Fire Button">
+        <select>
             <option>High-End (Fast)</option>
         </select>
-        <button onclick="alert('Injecting Config... Success!')">GENERATE CONFIG</button>
-        {% endif %}
+        <button onclick="alert('Injecting Config... Success!')">INJECT SENSITIVITY V3</button>
     </div>
 </body>
 </html>
@@ -41,12 +35,8 @@ HTML_TEMPLATE = """
 
 @app.route('/')
 def home():
-    return render_template_string(HTML_TEMPLATE, logged_in=False)
-
-@app.route('/login', methods=['POST'])
-def login():
-    # Basic logic: Agar user/pass sahi hai toh login
-    return render_template_string(HTML_TEMPLATE, logged_in=True)
+    return render_template_string(UI_CODE)
 
 if __name__ == '__main__':
     app.run()
+    
